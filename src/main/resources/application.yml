@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: fastfood-producao
+  redis:
+    host: redis
+    port: 6379
+    timeout: 60000
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 5
+        min-idle: 1
+  cache:
+    type: redis
+
+server:
+  port: 8080
+  servlet:
+    context-path: /fastfood-producao
+
+logging:
+  level:
+    org.springframework.data.redis: INFO
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
