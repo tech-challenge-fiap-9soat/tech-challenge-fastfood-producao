@@ -34,7 +34,7 @@ public class PedidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerPrimeiro(@PathVariable Long id) {
+    public ResponseEntity<Void> removerPedido(@PathVariable Long id) {
         pedidoCacheService.removerPedidoCache(id);
         return ResponseEntity.ok().build();
     }
