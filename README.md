@@ -5,18 +5,6 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 
 ## Funcionalidades do Sistema
 
-### Pedidos
-- **Cadastro de Cliente**: O cliente pode se identificar via CPF, se cadastrar com nome e e-mail, ou fazer o pedido anonimamente.
-- **Montagem de Combos**: O cliente pode montar seu pedido seguindo uma sequência opcional:
-    - Lanche
-    - Acompanhamento
-    - Bebida
-    - Sobremesa
-- **Exibição de Produtos**: Em cada etapa, são exibidos o nome, a descrição e o preço dos produtos disponíveis.
-
-### Pagamento
-- **QR Code para Pagamento**: O sistema possuirá integração com QR Code do Mercado Pago para realizar o pagamento do pedido.
-
 ### Acompanhamento de Pedido
 - **Status do Pedido**: Após confirmado e pago, o pedido é enviado à cozinha e o cliente pode acompanhar seu progresso nas etapas:
     - Recebido
@@ -24,16 +12,6 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
     - Pronto
     - Finalizado
 
-### Entrega
-- **Notificação de Pronto para Retirada**: O sistema notifica o cliente quando o pedido está pronto para retirada, e o status é atualizado para finalizado após a retirada.
-
-### Painel Administrativo
-- **Gerenciamento de Clientes**: Identificação de clientes para campanhas promocionais.
-- **Gerenciamento de Produtos e Categorias**: Configuração de produtos, nome, preço, descrição, e imagens. Categorias fixas:
-    - Lanche
-    - Acompanhamento
-    - Bebida
-    - Sobremesa
 - **Acompanhamento de Pedidos**: Monitoramento dos pedidos em andamento e controle do tempo de espera.
 
 ## Ambiente de Desenvolvimento
@@ -72,4 +50,3 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 
 # Apresentação disponível no Youtube
 
-- https://www.youtube.com/watch?v=RzqLn-3XJow
