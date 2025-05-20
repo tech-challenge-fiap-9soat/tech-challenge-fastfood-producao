@@ -59,9 +59,9 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
  kubectl apply -f k8s-infra/env/configmap.yaml &
  kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml &
  kubectl apply -f k8s-infra/db/postgresdb-service.yaml &
- kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml &
- kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-service.yaml & 
- kubectl apply -f k8s-infra/hpa/fastfoodapi-hpa.yaml
+ kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml &
+ kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml & 
+ kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
 ```
 3. A aplicação estará disponível em http://localhost:30001/fastfood/swagger-ui/index.html
 4. Segue abaixo ordem indicada para o uso das APIs:
