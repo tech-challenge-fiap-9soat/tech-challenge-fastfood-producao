@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastfoodapi-producao-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastfoodapi-producao
+  template:
+    metadata:
+      labels:
+        app: fastfoodapi-producao
+    spec:
+      containers:
+        - name: fastfoodapi-producao-pod
+          image: rm359211/fastfood-producao-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 1m
