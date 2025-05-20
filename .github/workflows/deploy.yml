@@ -3,7 +3,7 @@ name: Deploy FastFood-Producao API
 on:
   push:
     branches:
-      - master  # Executa o pipeline apenas na branch master
+      - master
   pull_request:
     branches:
       - master
@@ -19,11 +19,27 @@ jobs:
       - name: Setup JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '21'  # Agora está configurado para Java 21
+          java-version: '21'
           distribution: 'temurin'
 
-      - name: Build com Maven
-        run: mvn clean install  # Compila o projeto e cria o JAR
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=tech-challenge-fiap-9soat_tech-challenge-fastfood-producao
 
       - name: Login no Docker Hub
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -36,9 +52,9 @@ jobs:
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
           VERSION=$(date +%s)  # Usa timestamp como versão da imagem
-          docker build -t rm359211/fastfood-producao-app:$VERSION .  # Build da imagem Docker
-          docker push rm359211/fastfood-producao-app:$VERSION       # Push para o Docker Hub
-          echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV  # Salva a versão da imagem no ambiente do GitHub
+          docker build -t rm359211/fastfood-producao-app:$VERSION .
+          docker push rm359211/fastfood-producao-app:$VERSION
+          echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Conectar à EC2 e rodar os comandos do Kubernetes
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -48,7 +64,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Clonar ou atualizar o repositório
             if [ ! -d "/home/ubuntu/tech-challenge-fastfood-producao" ]; then
               echo "Repositório não encontrado, fazendo clone..."
               git clone https://github.com/tech-challenge-fiap-9soat/tech-challenge-fastfood-producao
@@ -60,7 +75,7 @@ jobs:
             # Atualizar a imagem no Deployment com a nova versão
             IMAGE_VERSION=${{ env.IMAGE_VERSION }}
             echo "Atualizando fastfoodapi-producao-deployment.yaml com a imagem rm359211/fastfood-producao-app:$IMAGE_VERSION"
-            sed -i 's|image: rm359211/fastfood-producao-app:.*|image: rm359211/fastfood-producao-app:'"$IMAGE_VERSION"'|' /home/ubuntu/tech-challenge-fastfood-producao/k8s-infra/fastfoodapi-producao/fastfoodapi-producao-deployment.yaml
+            sed -i 's|image: rm359211/fastfood-producao-app:.*|image: rm359211/fastfood-producao-app:'"$IMAGE_VERSION"'|' /home/ubuntu/tech-challenge-fastfood-producao/k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml
 
             # Verificar se o Kind está rodando
             if ! kubectl cluster-info &> /dev/null; then
@@ -74,9 +89,6 @@ jobs:
             echo "Aplicando configurações do Kubernetes..."
             cd /home/ubuntu/tech-challenge-fastfood-producao
             kubectl apply -f k8s-infra/env/secret.yaml
-            kubectl apply -f k8s-infra/env/configmap.yaml
-            kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml
-            kubectl apply -f k8s-infra/db/postgresdb-service.yaml
             kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml
             kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml
             kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
