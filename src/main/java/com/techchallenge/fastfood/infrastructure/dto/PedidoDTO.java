@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PedidoDTO {
     private Long id;
-    @NotNull
-    @CPF(message = "CPF inválido")
     private String cpf;
     private StatusPedido statusPedido;
     @NotNull
