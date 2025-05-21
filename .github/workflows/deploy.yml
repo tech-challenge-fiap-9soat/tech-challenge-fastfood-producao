@@ -96,8 +96,8 @@ jobs:
             kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
 
             # Expor o serviço usando NodePort
-            echo "Expondo o serviço na porta 30001..."
-            kubectl patch service fastfoodapi-producao-service -p '{"spec": {"type": "NodePort", "ports": [{"port": 8080, "targetPort": 8080, "nodePort": 30001}]}}'
+            echo "Expondo o serviço na porta 30002..."
+            kubectl patch service fastfoodapi-producao-service -p '{"spec": {"type": "NodePort", "ports": [{"port": 8080, "targetPort": 8080, "nodePort": 30002}]}}'
 
             # Verificar se o serviço está exposto corretamente
             echo "Verificando se o serviço está exposto..."
