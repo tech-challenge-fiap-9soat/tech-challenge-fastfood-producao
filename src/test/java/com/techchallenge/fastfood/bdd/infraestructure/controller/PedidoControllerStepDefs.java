@@ -38,8 +38,8 @@ public class PedidoControllerStepDefs {
 
     @Given("existem pedidos salvos na fila")
     public void existem_pedidos_salvos_na_fila() {
-        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, LocalDateTime.now().minusMinutes(2));
-        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.PRONTO, LocalDateTime.now());
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now());
         pedidoService.adicionarPedidoNaFila(pedido1);
         pedidoService.adicionarPedidoNaFila(pedido2);
     }

@@ -34,7 +34,7 @@ class PedidoCacheRedisGatewayTest {
     @Test
     @DisplayName("Deve retornar lista de pedidos convertidos do cache")
     void deveRetornarPedidosConvertidos() {
-        PedidoDTO pedido = new PedidoDTO(1L, "12345678900", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "12345678900", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         Object obj = objectMapper.convertValue(pedido, Object.class);
         when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(obj));
 
@@ -51,7 +51,7 @@ class PedidoCacheRedisGatewayTest {
     @DisplayName("Deve retornar pedido pelo ID")
     void deveRetornarPedidoPorId() {
         // cenário
-        PedidoDTO pedido = new PedidoDTO(10L, "98765432100", StatusPedido.PRONTO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(10L, "98765432100", StatusPedido.PRONTO, 10.0, LocalDateTime.now().withNano(0));
         Object obj = objectMapper.convertValue(pedido, Object.class);
         when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(obj));
 
@@ -80,7 +80,7 @@ class PedidoCacheRedisGatewayTest {
     @DisplayName("Deve salvar pedido na fila e retornar o mesmo")
     void deveSalvarPedidoNaFila() {
         // cenário
-        PedidoDTO pedido = new PedidoDTO(5L, "22233344455", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(5L, "22233344455", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(pedidoRepository.adicionarPedidoNaFila(pedido)).thenReturn(pedido);
 
         // ação

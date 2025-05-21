@@ -23,6 +23,7 @@ class JacksonConfigTest {
                 1L,
                 "12345678900",
                 StatusPedido.RECEBIDO,
+                10.0,
                 LocalDateTime.of(2025, 5, 18, 20, 0, 0)
         );
 
