@@ -28,7 +28,7 @@ public class PedidoController {
     }
 
     @PatchMapping("/{id}/status/{statusPedido}")
-    public ResponseEntity<Void> atualizarStatusParaPronto(@PathVariable Long id, @PathVariable StatusPedido statusPedido) {
+    public ResponseEntity<Void> atualizarStatus(@PathVariable Long id, @PathVariable StatusPedido statusPedido) {
         pedidoCacheService.atualizarStatusPedido(id, statusPedido);
         return ResponseEntity.ok().build();
     }

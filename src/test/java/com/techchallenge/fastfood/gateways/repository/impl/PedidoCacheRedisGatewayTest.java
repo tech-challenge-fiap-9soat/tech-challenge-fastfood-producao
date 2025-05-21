@@ -6,21 +6,22 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.infrastructure.repository.RedisPedidoRepository;
+import com.techchallenge.fastfood.infrastructure.repository.impl.RedisPedidoRepositoryMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class PedidoCacheRedisGatewayTest {
 
-    private final RedisPedidoRepository pedidoRepository = mock(RedisPedidoRepository.class);
+    private final RedisPedidoRepository pedidoRepository = mock(RedisPedidoRepositoryMock.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PedidoCacheRedisGateway gateway = new PedidoCacheRedisGateway(pedidoRepository, objectMapper);
 
