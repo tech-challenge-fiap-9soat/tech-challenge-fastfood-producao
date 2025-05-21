@@ -1,71 +1,19 @@
 package com.techchallenge.fastfood.infrastructure.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
-import jdk.jshell.Snippet;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Repository;
 
-import java.time.Duration;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
-@Repository
-@AllArgsConstructor
-public class RedisPedidoRepository {
+public interface RedisPedidoRepository {
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private static final String PEDIDO_KEY = "pedido:";
+    PedidoDTO adicionarPedidoNaFila(PedidoDTO pedido);
 
-    private final ObjectMapper objectMapper;
+    List<Object> listarFilaPedidos();
 
-    public PedidoDTO adicionarPedidoNaFila(PedidoDTO pedido) {
-        redisTemplate.opsForValue().set(PEDIDO_KEY+pedido.getId(), pedido);
-        return pedido;
-    }
+    void atualizarStatusPedido(Long id, StatusPedido statusPedido);
 
-    public List<Object> listarFilaPedidos() {
-        Set<String> chaves = redisTemplate.keys(PEDIDO_KEY+"*");
+    void removerPedidoCache(Long id);
 
-        if (chaves == null || chaves.isEmpty()) {
-            return List.of();
-        }
-
-        return chaves.stream()
-                .map(redisTemplate.opsForValue()::get)
-                .filter(Objects::nonNull)
-                .toList();
-    }
-
-    public void atualizarStatusPedido(Long id, StatusPedido statusPedido) {
-        String chave = PEDIDO_KEY + id;
-
-        Object obj = redisTemplate.opsForValue().get(chave);
-
-        if (obj == null) return;
-
-        PedidoDTO pedido = objectMapper.convertValue(obj, PedidoDTO.class);
-        pedido.setStatusPedido(statusPedido);
-
-        if (StatusPedido.PRONTO.equals(statusPedido)) {
-            redisTemplate.opsForValue().set(chave, pedido, Duration.ofMinutes(1));
-        } else if (StatusPedido.CANCELADO.equals(statusPedido)) {
-            removerPedidoCache(id);
-        } else {
-            redisTemplate.opsForValue().set(chave, pedido);
-        }
-    }
-
-    public void removerPedidoCache(Long id) {
-        redisTemplate.delete(PEDIDO_KEY + id);
-    }
-
-    public void removerTodosDadosEmCache() {
-        redisTemplate.delete(PEDIDO_KEY+"*");
-    }
-
+    void removerTodosDadosEmCache();
 }

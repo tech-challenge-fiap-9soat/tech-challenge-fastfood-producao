@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
+import com.techchallenge.fastfood.infrastructure.repository.impl.RedisPedidoRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +21,11 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class RedisPedidoRepositoryTest {
+class RedisPedidoRepositoryImplTest {
     private final RedisTemplate<String, Object> redisTemplate = mock(RedisTemplate.class);
     private final ValueOperations<String, Object> valueOperations = mock(ValueOperations.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final RedisPedidoRepository repository = new RedisPedidoRepository(redisTemplate, objectMapper);
+    private final RedisPedidoRepository repository = new RedisPedidoRepositoryImpl(redisTemplate, objectMapper);
 
     @BeforeEach
     void setup() {

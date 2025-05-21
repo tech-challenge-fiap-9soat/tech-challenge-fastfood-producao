@@ -19,9 +19,7 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 - **Java 21**
 - **Docker / Kubernetes**
 - **Maven**: Apache Maven 3.9.9
-- **Banco de Dados**: PostgreSQL 17
-    - Username: `postgres`
-    - Password: `1234`
+- **Banco de Dados**: Redis
 ---
 
 # Diagrama de Arquitetura:
@@ -35,18 +33,13 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 ```shell
  kubectl apply -f k8s-infra/env/secret.yaml &
  kubectl apply -f k8s-infra/env/configmap.yaml &
- kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml &
- kubectl apply -f k8s-infra/db/postgresdb-service.yaml &
+ kubectl apply -f k8s-infra/db/redis-statefulset.yaml &
+ kubectl apply -f k8s-infra/db/redis-headless.yaml &
  kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml &
  kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml & 
  kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
 ```
-3. A aplicação estará disponível em http://localhost:30001/fastfood/swagger-ui/index.html
-4. Segue abaixo ordem indicada para o uso das APIs:
-   1. cliente-controller (cadastro e busca de clientes)
-   2. produto-controller (cadastro, atualização, busca e deleção de produtos
-   3. pedido-controller (cadastro, atualização e busca de pedidos)
-   4. pagamento-controller (pagamento e verificação)
+3. A aplicação estará disponível em http://localhost:30001/fastfood-producao/swagger-ui/index.html
 
 # Apresentação disponível no Youtube
 
