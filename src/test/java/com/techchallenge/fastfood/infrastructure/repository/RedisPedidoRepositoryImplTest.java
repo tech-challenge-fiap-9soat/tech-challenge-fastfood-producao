@@ -36,7 +36,7 @@ class RedisPedidoRepositoryImplTest {
     @Test
     @DisplayName("Deve adicionar pedido na fila com sucesso")
     void deveAdicionarPedidoNaFila() {
-        PedidoDTO pedido = new PedidoDTO(1L, "12345678900", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "12345678900", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
 
         PedidoDTO resultado = repository.adicionarPedidoNaFila(pedido);
@@ -49,8 +49,8 @@ class RedisPedidoRepositoryImplTest {
     @DisplayName("Deve listar todos os pedidos salvos")
     void deveListarTodosPedidos() {
         Set<String> chaves = Set.of("pedido:1", "pedido:2");
-        PedidoDTO p1 = new PedidoDTO(1L, "111", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
-        PedidoDTO p2 = new PedidoDTO(2L, "222", StatusPedido.PRONTO, LocalDateTime.now().withNano(0));
+        PedidoDTO p1 = new PedidoDTO(1L, "111", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
+        PedidoDTO p2 = new PedidoDTO(2L, "222", StatusPedido.PRONTO, 10.0, LocalDateTime.now().withNano(0));
 
         when(redisTemplate.keys("pedido:*")).thenReturn(chaves);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
@@ -67,7 +67,7 @@ class RedisPedidoRepositoryImplTest {
     @Test
     @DisplayName("Deve atualizar status do pedido para PRONTO com TTL")
     void deveAtualizarStatusParaProntoComTTL() {
-        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("pedido:1")).thenReturn(pedido);
 
@@ -81,7 +81,7 @@ class RedisPedidoRepositoryImplTest {
     @Test
     @DisplayName("Deve atualizar status do pedido normalmente se não for PRONTO ou CANCELADO")
     void deveAtualizarStatusNormalmente() {
-        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("pedido:1")).thenReturn(pedido);
 
@@ -93,7 +93,7 @@ class RedisPedidoRepositoryImplTest {
     @Test
     @DisplayName("Deve remover pedido se status for CANCELADO")
     void deveRemoverPedidoSeCancelado() {
-        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "123", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("pedido:1")).thenReturn(pedido);
 

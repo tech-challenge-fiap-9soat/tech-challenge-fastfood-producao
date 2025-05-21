@@ -30,8 +30,8 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveListarFilaPedidosOrdenada() {
-        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, LocalDateTime.now().minusMinutes(2));
-        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.PRONTO, LocalDateTime.now());
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now());
 
         Object obj1 = new Object();
         Object obj2 = new Object();
@@ -48,7 +48,7 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveAdicionarPedidoNaFila() {
-        PedidoDTO pedido = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
         pedidoService.adicionarPedidoNaFila(pedido);
         Mockito.verify(pedidoRepository, Mockito.times(1)).adicionarPedidoNaFila(pedido);
     }

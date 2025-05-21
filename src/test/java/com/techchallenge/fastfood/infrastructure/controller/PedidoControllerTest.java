@@ -43,7 +43,7 @@ class PedidoControllerTest {
     @Test
     @DisplayName("Deve adicionar um pedido na fila com sucesso")
     void deveAdicionarPedidoNaFila() throws Exception {
-        PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
 
         mockMvc.perform(post("/pedido")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ class PedidoControllerTest {
     @Test
     @DisplayName("Deve listar todos os pedidos")
     void deveListarPedidos() throws Exception {
-        PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, LocalDateTime.now().withNano(0));
+        PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
         when(pedidoCacheService.listarFilaPedidos()).thenReturn(List.of(pedido));
 
         mockMvc.perform(get("/pedido"))
