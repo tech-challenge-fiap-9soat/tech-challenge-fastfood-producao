@@ -6,4 +6,4 @@ COPY ./target/fastfood-producao-*.jar application.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app/application.jar"]
+ENTRYPOINT ["java", "-jar", "/application.jar"]
