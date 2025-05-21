@@ -39,7 +39,7 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
  kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml & 
  kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
 ```
-3. A aplicação estará disponível em http://localhost:30001/fastfood-producao/swagger-ui/index.html
+3. A aplicação estará disponível em http://localhost:30002/fastfood-producao/swagger-ui/index.html
 
 # Apresentação disponível no Youtube
 
