@@ -1,8 +1,6 @@
 FROM openjdk:21-jdk-slim-buster
 
-WORKDIR /app
-
-COPY ./target/fastfood-producao-*.jar application.jar
+COPY ./target/fastfood-*.jar application.jar
 
 EXPOSE 8080
 
