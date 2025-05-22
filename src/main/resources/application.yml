@@ -2,7 +2,7 @@ spring:
   application:
     name: fastfood-producao
   redis:
-    host: 10.244.0.11
+    host: clustercfg.redis.w1u3jw.use1.cache.amazonaws.com
     port: 6379
     timeout: 60000
     jedis:
