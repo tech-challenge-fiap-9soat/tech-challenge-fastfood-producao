@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: redis
 spec:
-  serviceName: redis
+  serviceName: redis-headless
   replicas: 1
   selector:
     matchLabels:
