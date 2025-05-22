@@ -88,9 +88,9 @@ jobs:
             # Aplicar as configurações do Kubernetes
             echo "Aplicando configurações do Kubernetes..."
             cd /home/ubuntu/tech-challenge-fastfood-producao
-            kubectl apply -f k8s-infra/env/secret.yaml
             kubectl apply -f k8s-infra/db/redis-statefulset.yaml
             kubectl apply -f k8s-infra/db/redis-headless.yaml
+            kubectl apply -f k8s-infra/db/redis-service.yaml
             kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml
             kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml
             kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
