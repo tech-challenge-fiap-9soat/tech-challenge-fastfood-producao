@@ -12,8 +12,6 @@ spec:
     metadata:
       labels:
         app: redis
-      annotations:
-        redeploy-timestamp: "2025-05-21T23:30:00Z"
     spec:
       containers:
         - name: redis
