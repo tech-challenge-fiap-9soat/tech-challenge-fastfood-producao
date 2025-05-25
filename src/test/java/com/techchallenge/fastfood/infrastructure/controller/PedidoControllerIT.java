@@ -56,7 +56,7 @@ public class PedidoControllerIT {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(pedido)
                 .when()
-                .post("/fastfood-producao/pedido")
+                .post("/fastfood/pedido")
                 .then()
                 .statusCode(HttpStatus.OK.value());
 
@@ -77,7 +77,7 @@ public class PedidoControllerIT {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/fastfood-producao/pedido")
+                .get("/fastfood/pedido")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("size()", greaterThan(0))
@@ -97,7 +97,7 @@ public class PedidoControllerIT {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .patch("/fastfood-producao/pedido/{id}/status/{statusPedido}", 3L, StatusPedido.PRONTO)
+                .patch("/fastfood/pedido/{id}/status/{statusPedido}", 3L, StatusPedido.PRONTO)
                 .then()
                 .statusCode(HttpStatus.OK.value());
 
@@ -122,7 +122,7 @@ public class PedidoControllerIT {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .delete("/fastfood-producao/pedido/{id}", 4L)
+                .delete("/fastfood/pedido/{id}", 4L)
                 .then()
                 .statusCode(HttpStatus.OK.value());
 

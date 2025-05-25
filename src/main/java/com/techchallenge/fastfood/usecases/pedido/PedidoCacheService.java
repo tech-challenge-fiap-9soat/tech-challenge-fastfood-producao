@@ -11,6 +11,8 @@ public interface PedidoCacheService {
 
     List<PedidoDTO> listarFilaPedidos();
 
+    PedidoDTO getPedidoById(Long id);
+
     void atualizarStatusPedido(Long id, StatusPedido statusPedido);
 
     void removerPedidoCache(Long id);

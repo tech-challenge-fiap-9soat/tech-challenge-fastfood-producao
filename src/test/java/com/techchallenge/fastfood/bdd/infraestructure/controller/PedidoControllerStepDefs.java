@@ -53,7 +53,7 @@ public class PedidoControllerStepDefs {
     @Then("a API retorna a lista de pedidos ordenada")
     public void a_api_retorna_a_lista_de_pedidos_ordenada() throws Exception {
         resultado.andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].statusPedido").value("PRONTO"));
     }
 }

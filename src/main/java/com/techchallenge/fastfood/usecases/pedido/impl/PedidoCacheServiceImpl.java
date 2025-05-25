@@ -1,6 +1,7 @@
 package com.techchallenge.fastfood.usecases.pedido.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.infrastructure.repository.RedisPedidoRepository;
@@ -11,56 +12,43 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
 @Slf4j
 public class PedidoCacheServiceImpl implements PedidoCacheService {
 
-    private final RedisPedidoRepository pedidoRepository;
-    private final ObjectMapper objectMapper;
-
-    public List<PedidoDTO> getObjectAndConvertCachePedidos() {
-        List<Object> objects = pedidoRepository.listarFilaPedidos();
-
-        if (objects == null || objects.isEmpty()) return List.of();
-
-        return objects.stream().map(object -> objectMapper.convertValue(object, PedidoDTO.class)).toList();
-    }
+    private final PedidoGateway pedidoCacheGateway;
 
     @Override
     public List<PedidoDTO> listarFilaPedidos() {
-        List<PedidoDTO> pedidos = getObjectAndConvertCachePedidos();
+        return pedidoCacheGateway.findAllToDisplay();
+    }
 
-        return pedidos.stream()
-                .sorted(Comparator.comparing(
-                        (PedidoDTO p) -> p.getStatusPedido().getId(),
-                        Comparator.reverseOrder()
-                ).thenComparing(
-                        PedidoDTO::getCriadoEm,
-                        Comparator.reverseOrder()
-                ))
-                .toList();
+    @Override
+    public PedidoDTO getPedidoById(Long id) {
+        return pedidoCacheGateway.findById(id);
     }
 
     @Override
     public void adicionarPedidoNaFila(PedidoDTO pedido) {
-        pedidoRepository.adicionarPedidoNaFila(pedido);
+        pedidoCacheGateway.save(pedido);
     }
 
     @Override
     public void atualizarStatusPedido(Long id, StatusPedido statusPedido) {
-        pedidoRepository.atualizarStatusPedido(id, statusPedido);
+        pedidoCacheGateway.update(id, statusPedido);
     }
 
     @Override
     public void removerPedidoCache(Long id) {
-        pedidoRepository.removerPedidoCache(id);
+        pedidoCacheGateway.removeById(id);
     }
 
     @Override
     public void removerTodosDadosEmCache() {
-        pedidoRepository.removerTodosDadosEmCache();
+        pedidoCacheGateway.removeAll();
     }
 
 }

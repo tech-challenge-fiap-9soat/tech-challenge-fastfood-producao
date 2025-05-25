@@ -15,7 +15,7 @@ spring:
 
 server:
   servlet:
-    context-path: /fastfood-producao
+    context-path: /fastfood
 
 logging:
   level:

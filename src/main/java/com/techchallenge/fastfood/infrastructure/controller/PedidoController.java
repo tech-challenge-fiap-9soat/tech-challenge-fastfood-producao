@@ -34,6 +34,14 @@ public class PedidoController {
         return pedidos;
     }
 
+    @GetMapping("/{id}")
+    public PedidoDTO getPedido(@PathVariable Long id) {
+        log.info("[GET] get pedido pelo id - init...");
+        PedidoDTO pedido = pedidoCacheService.getPedidoById(id);
+        log.info("[GET] get pedido pelo id - finished...");
+        return pedido;
+    }
+
     @PatchMapping("/{id}/status/{statusPedido}")
     public ResponseEntity<Void> atualizarStatus(@PathVariable Long id, @PathVariable StatusPedido statusPedido) {
         log.info("[PATCH] atualizarStatus pedido - init...");
