@@ -9,9 +9,9 @@ public interface RedisPedidoRepository {
 
     PedidoDTO adicionarPedidoNaFila(PedidoDTO pedido);
 
-    List<Object> listarFilaPedidos();
+    List<PedidoDTO> listarFilaPedidos();
 
-    Object getPedidoById(Long id);
+    PedidoDTO getPedidoById(Long id);
 
     void atualizarStatusPedido(Long id, StatusPedido statusPedido);
 

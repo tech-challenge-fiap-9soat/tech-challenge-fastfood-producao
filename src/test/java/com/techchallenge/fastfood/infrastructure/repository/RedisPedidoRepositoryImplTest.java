@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RedisPedidoRepositoryImplTest {
-    private final RedisTemplate<String, Object> redisTemplate = mock(RedisTemplate.class);
-    private final ValueOperations<String, Object> valueOperations = mock(ValueOperations.class);
+    private final RedisTemplate<String, PedidoDTO> redisTemplate = mock(RedisTemplate.class);
+    private final ValueOperations<String, PedidoDTO> valueOperations = mock(ValueOperations.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final RedisPedidoRepository repository = new RedisPedidoRepositoryImpl(redisTemplate, objectMapper);
 
@@ -57,7 +57,7 @@ class RedisPedidoRepositoryImplTest {
         when(valueOperations.get("pedido:1")).thenReturn(p1);
         when(valueOperations.get("pedido:2")).thenReturn(p2);
 
-        List<Object> pedidos = repository.listarFilaPedidos();
+        List<PedidoDTO> pedidos = repository.listarFilaPedidos();
 
         assertEquals(2, pedidos.size());
         assertTrue(pedidos.contains(p1));

@@ -21,11 +21,11 @@ public class PedidoCacheRedisGateway implements PedidoGateway {
     private final ObjectMapper objectMapper;
 
     public List<PedidoDTO> getObjectAndConvertCachePedidos() {
-        List<Object> objects = pedidoRepository.listarFilaPedidos();
+        List<PedidoDTO> objects = pedidoRepository.listarFilaPedidos();
 
         if (objects == null || objects.isEmpty()) return List.of();
 
-        return objects.stream().map(object -> objectMapper.convertValue(object, PedidoDTO.class)).toList();
+        return objects;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class PedidoCacheRedisGateway implements PedidoGateway {
 
     @Override
     public PedidoDTO findById(Long id) {
-        Object objectPedido = pedidoRepository.getPedidoById(id);
+        PedidoDTO objectPedido = pedidoRepository.getPedidoById(id);
 
         if (objectPedido == null) return null;
 
-        return objectMapper.convertValue(objectPedido, PedidoDTO.class);
+        return objectPedido;
     }
 
     @Override

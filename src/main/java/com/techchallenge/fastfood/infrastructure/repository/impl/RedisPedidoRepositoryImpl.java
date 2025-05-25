@@ -21,7 +21,7 @@ import java.util.Set;
 @Profile("!test")
 public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, PedidoDTO> redisTemplate;
     private static final String PEDIDO_KEY = "pedido:";
 
     private final ObjectMapper objectMapper;
@@ -33,7 +33,7 @@ public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
     }
 
     @Override
-    public List<Object> listarFilaPedidos() {
+    public List<PedidoDTO> listarFilaPedidos() {
         Set<String> chaves = redisTemplate.keys(PEDIDO_KEY+"*");
 
         if (chaves == null || chaves.isEmpty()) {
@@ -47,7 +47,7 @@ public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
     }
 
     @Override
-    public Object getPedidoById(Long id) {
+    public PedidoDTO getPedidoById(Long id) {
         Set<String> chaves = redisTemplate.keys(PEDIDO_KEY+id);
 
         if (chaves == null || chaves.isEmpty()) {
