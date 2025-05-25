@@ -1,13 +1,10 @@
 package com.techchallenge.fastfood.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -15,21 +12,22 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    public RedisTemplate<String, PedidoDTO> redisTemplate(RedisConnectionFactory connectionFactory, ObjectMapper objectMapper) {
-        RedisTemplate<String, PedidoDTO> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory, ObjectMapper objectMapper) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
+        // Serializador para chave
         template.setKeySerializer(new StringRedisSerializer());
 
-        Jackson2JsonRedisSerializer<PedidoDTO> serializer =
-                new Jackson2JsonRedisSerializer<>(objectMapper.getTypeFactory().constructType(PedidoDTO.class));
+        // Serializador para valor com suporte moderno
+        Jackson2JsonRedisSerializer<Object> jacksonSerializer =
+                new Jackson2JsonRedisSerializer<>(objectMapper.getTypeFactory().constructType(Object.class));
 
-        template.setValueSerializer(serializer);
+        template.setValueSerializer(jacksonSerializer);
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(serializer);
+        template.setHashValueSerializer(jacksonSerializer);
 
         template.afterPropertiesSet();
         return template;
     }
-
 }
