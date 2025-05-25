@@ -23,21 +23,16 @@ class JacksonConfigTest {
                 1L,
                 "12345678900",
                 StatusPedido.RECEBIDO,
-                10.0,
-                LocalDateTime.of(2025, 5, 18, 20, 0, 0)
+                10.0
         );
 
         // ação - serializa
         String json = mapper.writeValueAsString(pedido);
 
-        // verificação da serialização
-        assertTrue(json.contains("\"criadoEm\":\"2025-05-18 20:00:00\""));
-
         // ação - desserializa
         PedidoDTO resultado = mapper.readValue(json, PedidoDTO.class);
 
         // verificação da desserialização
-        assertEquals(pedido.getCriadoEm(), resultado.getCriadoEm());
         assertEquals(pedido.getCpf(), resultado.getCpf());
         assertEquals(pedido.getStatusPedido(), resultado.getStatusPedido());
     }
