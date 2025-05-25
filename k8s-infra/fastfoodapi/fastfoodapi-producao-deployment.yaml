@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fastfoodapi-producao-deployment
+      app: fastfoodapi-producao
   template:
     metadata:
       labels:
