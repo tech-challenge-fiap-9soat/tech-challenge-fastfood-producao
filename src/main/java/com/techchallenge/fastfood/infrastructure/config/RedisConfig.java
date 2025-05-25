@@ -22,6 +22,7 @@ public class RedisConfig {
         Jackson2JsonRedisSerializer<PedidoDTO> serializer =
                 new Jackson2JsonRedisSerializer<>(objectMapper.getTypeFactory().constructType(PedidoDTO.class));
 
+        template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(serializer);
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setHashValueSerializer(serializer);
@@ -29,4 +30,5 @@ public class RedisConfig {
         template.afterPropertiesSet();
         return template;
     }
+
 }

@@ -10,12 +10,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 @Configuration
 public class JacksonConfig {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); // Habilita suporte a LocalDateTime
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Evita timestamp numérico
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+
+        // Suporte para LocalDateTime (entrada e saída)
+        javaTimeModule.addDeserializer(LocalDateTime.class,
+                new com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer(formatter));
+
+        javaTimeModule.addSerializer(LocalDateTime.class,
+                new com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer(formatter));
+
+        mapper.registerModule(javaTimeModule);
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return mapper;
     }
 }
