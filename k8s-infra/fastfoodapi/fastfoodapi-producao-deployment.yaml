@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: fastfoodapi-producao-deployment
+        app: fastfoodapi-producao
     spec:
       containers:
         - name: fastfoodapi-producao-pod
