@@ -57,7 +57,7 @@ public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
         return chaves.stream()
                 .map(redisTemplate.opsForValue()::get)
                 .filter(Objects::nonNull)
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 
     @Override
