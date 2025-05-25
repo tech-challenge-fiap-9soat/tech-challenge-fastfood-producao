@@ -2,8 +2,10 @@ spring:
   application:
     name: fastfood-producao
   redis:
-    host: ${REDIS_HOST:redis}
-    port: ${REDIS_PORT:6379}
+    host: clustercfg.redis.w1u3jw.use1.cache.amazonaws.com
+    port: 6379
+    lettuce:
+      shutdown-timeout: 100ms
     timeout: 60000
     jedis:
       pool:
