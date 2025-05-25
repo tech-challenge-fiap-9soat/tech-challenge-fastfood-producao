@@ -34,8 +34,7 @@ class PedidoCacheRedisGatewayTest {
     @DisplayName("Deve retornar lista de pedidos convertidos do cache")
     void deveRetornarPedidosConvertidos() {
         PedidoDTO pedido = new PedidoDTO(1L, "12345678900", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
-        Object obj = objectMapper.convertValue(pedido, Object.class);
-        when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(obj));
+        when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(pedido));
 
         // ação
         List<PedidoDTO> resultado = gateway.findAllToDisplay();
@@ -51,8 +50,7 @@ class PedidoCacheRedisGatewayTest {
     void deveRetornarPedidoPorId() {
         // cenário
         PedidoDTO pedido = new PedidoDTO(10L, "98765432100", StatusPedido.PRONTO, 10.0, LocalDateTime.now().withNano(0));
-        Object obj = objectMapper.convertValue(pedido, Object.class);
-        when(pedidoRepository.getPedidoById(10L)).thenReturn(obj);
+        when(pedidoRepository.getPedidoById(10L)).thenReturn(pedido);
 
         // ação
         PedidoDTO resultado = gateway.findById(10L);
