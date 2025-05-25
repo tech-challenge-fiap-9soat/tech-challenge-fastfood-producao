@@ -66,6 +66,19 @@ class PedidoControllerTest {
     }
 
     @Test
+    @DisplayName("Deve listar o pedido do id buscado")
+    void deveListarPedidoComIdBuscado() throws Exception {
+        PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().withNano(0));
+        when(pedidoCacheService.getPedidoById(1L)).thenReturn(pedido);
+
+        mockMvc.perform(get("/pedido/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.cpf").value("50328074861"));
+    }
+
+
+    @Test
     @DisplayName("Deve atualizar o status do pedido")
     void deveAtualizarStatusPedido() throws Exception {
         mockMvc.perform(patch("/pedido/1/status/PRONTO"))

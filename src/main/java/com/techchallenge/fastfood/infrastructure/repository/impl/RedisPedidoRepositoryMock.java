@@ -30,6 +30,11 @@ public class RedisPedidoRepositoryMock implements RedisPedidoRepository {
     }
 
     @Override
+    public Object getPedidoById(Long id) {
+        return cache.values().stream().toList().get(0);
+    }
+
+    @Override
     public void atualizarStatusPedido(Long id, StatusPedido statusPedido) {
         PedidoDTO pedido = cache.get(id);
         if (pedido != null) {

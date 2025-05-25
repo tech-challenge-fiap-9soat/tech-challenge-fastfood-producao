@@ -1,6 +1,7 @@
 package com.techchallenge.fastfood.usecases.pedido.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.infrastructure.repository.RedisPedidoRepository;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PedidoCacheServiceImplTest {
 
     @Mock
-    private RedisPedidoRepository pedidoRepository;
+    private PedidoGateway pedidoGateway;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -30,15 +31,10 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveListarFilaPedidosOrdenada() {
-        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
-        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now());
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now());
 
-        Object obj1 = new Object();
-        Object obj2 = new Object();
-
-        Mockito.when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(obj1, obj2));
-        Mockito.when(objectMapper.convertValue(obj1, PedidoDTO.class)).thenReturn(pedido1);
-        Mockito.when(objectMapper.convertValue(obj2, PedidoDTO.class)).thenReturn(pedido2);
+        Mockito.when(pedidoGateway.findAllToDisplay()).thenReturn(List.of(pedido1, pedido2));
 
         List<PedidoDTO> resultado = pedidoService.listarFilaPedidos();
 
@@ -47,16 +43,27 @@ class PedidoCacheServiceImplTest {
     }
 
     @Test
+    void deveListarOPedidoBuscado() {
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now().minusMinutes(2));
+
+        Mockito.when(pedidoGateway.findById(1L)).thenReturn(pedido1);
+
+        PedidoDTO resultado = pedidoService.getPedidoById(1L);
+
+        assertEquals(123L, resultado.getId());
+    }
+
+    @Test
     void deveAdicionarPedidoNaFila() {
         PedidoDTO pedido = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
         pedidoService.adicionarPedidoNaFila(pedido);
-        Mockito.verify(pedidoRepository, Mockito.times(1)).adicionarPedidoNaFila(pedido);
+        Mockito.verify(pedidoGateway, Mockito.times(1)).save(pedido);
     }
 
     @Test
     void deveRemoverPrimeiroDaFila() {
         pedidoService.removerPedidoCache(10L);
-        Mockito.verify(pedidoRepository).removerPedidoCache(10L);
+        Mockito.verify(pedidoGateway).removeById(10L);
     }
 
 }

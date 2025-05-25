@@ -47,6 +47,20 @@ public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
     }
 
     @Override
+    public Object getPedidoById(Long id) {
+        Set<String> chaves = redisTemplate.keys(PEDIDO_KEY+id);
+
+        if (chaves == null || chaves.isEmpty()) {
+            return null;
+        }
+
+        return chaves.stream()
+                .map(redisTemplate.opsForValue()::get)
+                .filter(Objects::nonNull)
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public void atualizarStatusPedido(Long id, StatusPedido statusPedido) {
         String chave = PEDIDO_KEY + id;
 

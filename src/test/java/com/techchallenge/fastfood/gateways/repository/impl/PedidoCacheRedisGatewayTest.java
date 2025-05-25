@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PedidoCacheRedisGatewayTest {
@@ -53,14 +52,14 @@ class PedidoCacheRedisGatewayTest {
         // cenário
         PedidoDTO pedido = new PedidoDTO(10L, "98765432100", StatusPedido.PRONTO, 10.0, LocalDateTime.now().withNano(0));
         Object obj = objectMapper.convertValue(pedido, Object.class);
-        when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of(obj));
+        when(pedidoRepository.getPedidoById(10L)).thenReturn(obj);
 
         // ação
-        Optional<PedidoDTO> resultado = gateway.findById(10L);
+        PedidoDTO resultado = gateway.findById(10L);
 
         // verificação
-        assertTrue(resultado.isPresent());
-        assertEquals(10L, resultado.get().getId());
+        assertNotNull(resultado);
+        assertEquals(10L, resultado.getId());
     }
 
     @Test
@@ -70,10 +69,10 @@ class PedidoCacheRedisGatewayTest {
         when(pedidoRepository.listarFilaPedidos()).thenReturn(List.of());
 
         // ação
-        Optional<PedidoDTO> resultado = gateway.findById(999L);
+        PedidoDTO resultado = gateway.findById(999L);
 
         // verificação
-        assertTrue(resultado.isEmpty());
+        assertNull(resultado);
     }
 
     @Test

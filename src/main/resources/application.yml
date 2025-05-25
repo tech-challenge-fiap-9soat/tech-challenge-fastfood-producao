@@ -2,7 +2,7 @@ spring:
   application:
     name: fastfood-producao
   redis:
-    host: ${REDIS_HOST:localhost}
+    host: ${REDIS_HOST:redis}
     port: ${REDIS_PORT:6379}
     timeout: 60000
     jedis:
@@ -15,7 +15,7 @@ spring:
 
 server:
   servlet:
-    context-path: /fastfood-producao
+    context-path: /fastfood
 
 logging:
   level:

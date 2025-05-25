@@ -11,6 +11,8 @@ public interface RedisPedidoRepository {
 
     List<Object> listarFilaPedidos();
 
+    Object getPedidoById(Long id);
+
     void atualizarStatusPedido(Long id, StatusPedido statusPedido);
 
     void removerPedidoCache(Long id);
