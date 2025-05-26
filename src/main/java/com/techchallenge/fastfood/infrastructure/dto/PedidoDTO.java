@@ -17,7 +17,4 @@ public class PedidoDTO {
     private String cpf;
     private StatusPedido statusPedido;
     private Double valorTotal;
-    @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime criadoEm;
 }

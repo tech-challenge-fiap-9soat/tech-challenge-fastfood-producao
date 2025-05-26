@@ -50,7 +50,6 @@ public class PedidoControllerIT {
         pedido.setId(1L);
         pedido.setCpf("28477593019");
         pedido.setStatusPedido(StatusPedido.RECEBIDO);
-        pedido.setCriadoEm(LocalDateTime.now().withNano(0));
 
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -70,7 +69,6 @@ public class PedidoControllerIT {
         pedido.setId(2L);
         pedido.setCpf("48654344024");
         pedido.setStatusPedido(StatusPedido.RECEBIDO);
-        pedido.setCriadoEm(LocalDateTime.now().withNano(0));
 
         pedidoCacheService.adicionarPedidoNaFila(pedido);
 
@@ -90,7 +88,6 @@ public class PedidoControllerIT {
         pedido.setId(3L);
         pedido.setCpf("07823828006");
         pedido.setStatusPedido(StatusPedido.RECEBIDO);
-        pedido.setCriadoEm(LocalDateTime.now().withNano(0));
 
         pedidoCacheService.adicionarPedidoNaFila(pedido);
 
@@ -115,7 +112,6 @@ public class PedidoControllerIT {
         pedido.setId(4L);
         pedido.setCpf("21972026003");
         pedido.setStatusPedido(StatusPedido.RECEBIDO);
-        pedido.setCriadoEm(LocalDateTime.now().withNano(0));
 
         pedidoCacheService.adicionarPedidoNaFila(pedido);
 

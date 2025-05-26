@@ -25,12 +25,12 @@ public class RedisPedidoRepositoryMock implements RedisPedidoRepository {
     }
 
     @Override
-    public List<Object> listarFilaPedidos() {
+    public List<PedidoDTO> listarFilaPedidos() {
         return new ArrayList<>(cache.values());
     }
 
     @Override
-    public Object getPedidoById(Long id) {
+    public PedidoDTO getPedidoById(Long id) {
         return cache.values().stream().toList().get(0);
     }
 
