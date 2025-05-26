@@ -5,6 +5,7 @@ import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.infrastructure.repository.RedisPedidoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,10 +22,10 @@ import java.util.Set;
 @Profile("!test")
 public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
 
-    private final RedisTemplate<String, PedidoDTO> redisTemplate;
-    private static final String PEDIDO_KEY = "pedido:";
+    @Autowired
+    private RedisTemplate<String, PedidoDTO> redisTemplate;
 
-    private final ObjectMapper objectMapper;
+    private static final String PEDIDO_KEY = "pedido:";
 
     @Override
     public PedidoDTO adicionarPedidoNaFila(PedidoDTO pedido) {
@@ -64,11 +65,10 @@ public class RedisPedidoRepositoryImpl implements RedisPedidoRepository {
     public void atualizarStatusPedido(Long id, StatusPedido statusPedido) {
         String chave = PEDIDO_KEY + id;
 
-        Object obj = redisTemplate.opsForValue().get(chave);
+        PedidoDTO pedido = redisTemplate.opsForValue().get(chave);
 
-        if (obj == null) return;
+        if (pedido == null) return;
 
-        PedidoDTO pedido = objectMapper.convertValue(obj, PedidoDTO.class);
         pedido.setStatusPedido(statusPedido);
 
         if (StatusPedido.PRONTO.equals(statusPedido)) {
