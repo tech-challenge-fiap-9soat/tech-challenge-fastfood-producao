@@ -20,6 +20,6 @@ spec:
             - containerPort: 8080
           env:
             - name: REDIS_HOST
-              value: redis
+              value: localhost
             - name: REDIS_PORT
               value: "6379"
