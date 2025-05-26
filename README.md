@@ -31,7 +31,7 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 1. Após realizar o clone do projeto deve-se primeiro se atentar as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
 2. Posteriormente, basta rodar a seguinte sequência de scripts que seguem abaixo concatenados:
 ```shell
- kubectl apply -f k8s-infra/db/redis-stastefulset.yaml &
+ kubectl apply -f k8s-infra/db/redis-deployment.yaml &
  kubectl apply -f k8s-infra/db/redis-service.yaml &
  kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml &
  kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml & 
