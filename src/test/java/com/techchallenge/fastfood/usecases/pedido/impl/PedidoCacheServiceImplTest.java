@@ -31,8 +31,8 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveListarFilaPedidosOrdenada() {
-        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now().minusMinutes(2));
-        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now());
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0);
+        PedidoDTO pedido2 = new PedidoDTO(456l, "58349259351", StatusPedido.RECEBIDO, 10.0);
 
         Mockito.when(pedidoGateway.findAllToDisplay()).thenReturn(List.of(pedido1, pedido2));
 
@@ -44,7 +44,7 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveListarOPedidoBuscado() {
-        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido1 = new PedidoDTO(123l, "58349259351", StatusPedido.PRONTO, 10.0);
 
         Mockito.when(pedidoGateway.findById(1L)).thenReturn(pedido1);
 
@@ -55,7 +55,7 @@ class PedidoCacheServiceImplTest {
 
     @Test
     void deveAdicionarPedidoNaFila() {
-        PedidoDTO pedido = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0, LocalDateTime.now().minusMinutes(2));
+        PedidoDTO pedido = new PedidoDTO(123l, "58349259351", StatusPedido.RECEBIDO, 10.0);
         pedidoService.adicionarPedidoNaFila(pedido);
         Mockito.verify(pedidoGateway, Mockito.times(1)).save(pedido);
     }

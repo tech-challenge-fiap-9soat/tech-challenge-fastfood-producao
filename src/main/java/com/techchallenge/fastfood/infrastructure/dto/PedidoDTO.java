@@ -1,13 +1,9 @@
 package com.techchallenge.fastfood.infrastructure.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +13,4 @@ public class PedidoDTO {
     private String cpf;
     private StatusPedido statusPedido;
     private Double valorTotal;
-    @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime criadoEm;
 }

@@ -32,12 +32,12 @@ public class PedidoCacheRedisGateway implements PedidoGateway {
     public List<PedidoDTO> findAllToDisplay() {
         List<PedidoDTO> pedidos = getObjectAndConvertCachePedidos();
 
-        return pedidos.stream()
+        return pedidos.stream().filter(p -> !StatusPedido.FINALIZADO.equals(p.getStatusPedido()))
                 .sorted(Comparator.comparing(
                         (PedidoDTO p) -> p.getStatusPedido().getId(),
                         Comparator.reverseOrder()
                 ).thenComparing(
-                        PedidoDTO::getCriadoEm,
+                        PedidoDTO::getId,
                         Comparator.reverseOrder()
                 ))
                 .toList();
