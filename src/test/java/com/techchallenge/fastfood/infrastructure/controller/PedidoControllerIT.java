@@ -75,7 +75,7 @@ public class PedidoControllerIT {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/fastfood/pedido/list-cache")
+                .get("/fastfood/pedido")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("size()", greaterThan(0))
