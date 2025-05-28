@@ -1,15 +1,16 @@
 spring:
   application:
     name: fastfood-producao
-  redis:
-    host: ${REDIS_HOST:redis}
-    port: ${REDIS_PORT:6379}
-    timeout: 60000
-    jedis:
-      pool:
-        max-active: 10
-        max-idle: 5
-        min-idle: 1
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      timeout: 60000
+      jedis:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 1
   cache:
     type: redis
 
