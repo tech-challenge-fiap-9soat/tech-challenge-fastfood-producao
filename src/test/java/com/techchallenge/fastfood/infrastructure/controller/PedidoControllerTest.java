@@ -59,7 +59,7 @@ class PedidoControllerTest {
         PedidoDTO pedido = new PedidoDTO(1L, "50328074861", StatusPedido.RECEBIDO, 10.0);
         when(pedidoCacheService.listarFilaPedidos()).thenReturn(List.of(pedido));
 
-        mockMvc.perform(get("/pedido"))
+        mockMvc.perform(get("/pedido/list-cache"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].cpf").value("50328074861"));

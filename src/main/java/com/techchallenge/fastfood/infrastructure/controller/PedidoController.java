@@ -26,7 +26,7 @@ public class PedidoController {
         log.info("[POST] adicionando pedido - finished...");
     }
 
-    @GetMapping
+    @GetMapping("/list-cache")
     public List<PedidoDTO> listar() {
         log.info("[GET] listar pedido - init...");
         List<PedidoDTO> pedidos = pedidoCacheService.listarFilaPedidos();
