@@ -1,43 +1,58 @@
-# tech-challenge-fastfood
+# Tech Challenge FastFood Produção
 
-## Visão Geral
-Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar que integra conhecimentos de diversas disciplinas da fase de desenvolvimento. A atividade visa desenvolver um sistema de autoatendimento para uma lanchonete em expansão, com foco em melhorar a eficiência do atendimento e a satisfação dos clientes.
+Este projeto faz parte do Tech Challenge da pós-graduação em Arquitetura de Software da FIAP. Ele representa o microsserviço responsável pela gestão do processo de produção dos pedidos no sistema de autoatendimento de uma lanchonete em expansão.
 
-## Funcionalidades do Sistema
+## 📚 Visão Geral
 
-### Acompanhamento de Pedido
-- **Status do Pedido**: Após confirmado e pago, o pedido é enviado à cozinha e o cliente pode acompanhar seu progresso nas etapas:
-    - Recebido
-    - Em preparação
-    - Pronto
-    - Finalizado
+O **FastFood Produção** é um microsserviço desenvolvido em Java, utilizando o framework Spring Boot, que gerencia a fila de produção dos pedidos na cozinha. Ele é responsável por controlar e atualizar os status de cada etapa do preparo, proporcionando visibilidade em tempo real para a equipe operacional e garantindo uma produção eficiente e organizada dos pedidos.
 
-- **Acompanhamento de Pedidos**: Monitoramento dos pedidos em andamento e controle do tempo de espera.
+## 🚀 Tecnologias Utilizadas
 
-## Ambiente de Desenvolvimento
+- **Linguagem:** Java 21  
+- **Framework:** Spring Boot  
+- **Gerenciador de Dependências:** Maven 3.9.9  
+- **Banco de Dados:** PostgreSQL 17  
+- **Containerização:** Docker  
+- **Orquestração:** Kubernetes  
 
-- **Java 21**
-- **Docker / Kubernetes**
-- **Maven**: Apache Maven 3.9.9
-- **Banco de Dados**: Redis
----
+## 🛠️ Configuração e Execução
 
-# Diagrama de Arquitetura:
+1. **Pré-requisitos:**
+   - Java 21
+   - Maven 3.9.9
+   - Docker
+   - Kubernetes com `kubectl` configurado
 
-![Desenho de arquitetura.jpg](documentacao%2FDesenho%20de%20arquitetura.jpg)
+2. **Clone o repositório:**
 
-# Passo a passo para execução
+   ```bash
+   git clone https://github.com/tech-challenge-fiap-9soat/tech-challenge-fastfood-producao.git
+   cd tech-challenge-fastfood-producao
+   ```
+## Implante os recursos no Kubernetes:
 
-1. Após realizar o clone do projeto deve-se primeiro se atentar as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
-2. Posteriormente, basta rodar a seguinte sequência de scripts que seguem abaixo concatenados:
-```shell
- kubectl apply -f k8s-infra/db/redis-deployment.yaml &
- kubectl apply -f k8s-infra/db/redis-service.yaml &
- kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml &
- kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml & 
- kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
+3. Execute os seguintes comandos para aplicar os manifests:
+
+```bash
+    kubectl apply -f k8s-infra/db/redis-deployment.yaml
+    kubectl apply -f k8s-infra/db/redis-service.yaml
+    kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-deployment.yaml
+    kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-producao-service.yaml
+    kubectl apply -f k8s-infra/hpa/fastfoodapi-producao-hpa.yaml
 ```
-3. A aplicação estará disponível em http://localhost:30002/fastfood-producao/swagger-ui/index.html
 
-# Apresentação disponível no Youtube
+Acesse a aplicação:
+
+Após a implantação, a aplicação estará disponível em: http://localhost:30002/fastfood/swagger-ui/index.html
+
+##📄 Documentação
+A documentação completa da API, incluindo os endpoints disponíveis, pode ser acessada via Swagger UI no link fornecido acima.
+
+## Segue Evidência de testes e coberturas:
+
+![image](https://github.com/user-attachments/assets/2fcf5ccb-f65e-4cea-b1cd-56ebc4663331)
+
+#### segue os casos de testes, o ultimo "Gerenciar pagamentos de pedidos é o BDD com Cucumber
+
+![image](https://github.com/user-attachments/assets/ecc8d6fa-0254-4a0d-be53-d5e22333aaf3)
 
