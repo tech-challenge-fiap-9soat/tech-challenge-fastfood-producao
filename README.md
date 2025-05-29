@@ -54,6 +54,7 @@ A documentação completa da API, incluindo os endpoints disponíveis, pode ser 
 
 #### segue os casos de testes, o ultimo "Gerenciar pagamentos de pedidos é o BDD com Cucumber
 
-![image](https://github.com/user-attachments/assets/6dfc1454-1e17-424b-8c0a-d7f5203ece1b)
+![image](https://github.com/user-attachments/assets/5a1d14ff-b6d7-4d09-a0b3-103151440df8)
+
 
 
